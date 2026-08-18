@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TaskFlow | Add Task</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<nav class="navbar">
+    <a class="brand" href="{{ url_for('index') }}"><span class="brand-dot"></span>TaskFlow</a>
+    <div class="nav-links">
+        <a href="{{ url_for('index') }}">Home</a>
+        <a class="active" href="{{ url_for('add_task') }}">Add Task</a>
+        <a href="{{ url_for('logout') }}">Logout</a>
+    </div>
+</nav>
+
+<main class="container narrow">
+    <div class="page-title">
+        <a href="{{ url_for('index') }}" class="back-link">← Back to dashboard</a>
+        <span class="eyebrow">NEW TASK</span>
+        <h1>Add New Task</h1>
+        <p>What do you need to get done?</p>
+    </div>
+    <div class="task-form-card">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% for category, message in messages %}
+                <div class="alert {{ category }}">{{ message }}</div>
+            {% endfor %}
+        {% endwith %}
+        <form method="post">
+            <label>Task</label>
+            <div class="input-wrap large"><span>✓</span><input name="title" type="text" placeholder="Enter your task" maxlength="150" required></div>
+
+            <label>Description <small>(optional)</small></label>
+            <textarea name="description" placeholder="Add a little more detail..."></textarea>
+
+            <div class="form-row">
+                <div>
+                    <label>Priority</label>
+                    <select name="priority">
+                        <option value="Low">Low</option>
+                        <option value="Medium" selected>Medium</option>
+                        <option value="High">High</option>
+                    </select>
+                </div>
+                <div>
+                    <label>Due date</label>
+                    <input name="due_date" type="date">
+                </div>
+            </div>
+            <button class="btn btn-success full" type="submit">+ Add Task</button>
+        </form>
+    </div>
+</main>
+</body>
+</html>

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TaskFlow | Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<nav class="navbar">
+    <a class="brand" href="{{ url_for('index') }}"><span class="brand-dot"></span>TaskFlow</a>
+    <div class="nav-links">
+        <a class="active" href="{{ url_for('index') }}">Home</a>
+        <a href="{{ url_for('add_task') }}">Add Task</a>
+        <a href="{{ url_for('logout') }}">Logout</a>
+    </div>
+</nav>
+
+<main class="container">
+    <section class="hero-card">
+        <div>
+            <span class="eyebrow">PERSONAL TASK MANAGER</span>
+            <h1>Stay organized.<br><span>Get things done.</span></h1>
+            <p>Create, track and manage your tasks from one clean dashboard.</p>
+            <a href="{{ url_for('add_task') }}" class="btn btn-primary">+ Add New Task</a>
+        </div>
+        <div class="hero-shape">
+            <div class="floating-card card-one">✓ Design UI</div>
+            <div class="floating-card card-two">✓ Finish project</div>
+            <div class="check-circle">✓</div>
+        </div>
+    </section>
+
+    <section class="section-head">
+        <div>
+            <h2>My Tasks</h2>
+            <p>Welcome back, {{ user.username }}. Here is your task list.</p>
+        </div>
+        <div class="task-count">{{ tasks|length }} {{ "task" if tasks|length == 1 else "tasks" }}</div>
+    </section>
+
+    {% if tasks %}
+    <section class="task-grid">
+        {% for task in tasks %}
+        <article class="task-card {% if task.done %}done{% endif %}">
+            <span class="priority {{ task.priority }}">{{ task.priority }}</span>
+            <h3 class="task-title">{{ task.title }}</h3>
+            <p class="task-description">{{ task.description or "No description" }}</p>
+            <div class="task-meta">
+                <span>{{ "Due: " + task.due_date if task.due_date else "No due date" }}</span>
+                <div class="task-actions">
+                    <form method="post" action="{{ url_for('toggle_task', task_id=task.id) }}">
+                        <button class="icon-btn" title="Complete task">{{ "↩" if task.done else "✓" }}</button>
+                    </form>
+                    <form method="post" action="{{ url_for('delete_task', task_id=task.id) }}" onsubmit="return confirm('Delete this task?')">
+                        <button class="icon-btn" title="Delete task">🗑</button>
+                    </form>
+                </div>
+            </div>
+        </article>
+        {% endfor %}
+    </section>
+    {% else %}
+    <div class="empty-state">
+        <div class="empty-icon">✓</div>
+        <h3>No tasks yet</h3>
+        <p>Add your first task and start getting things done.</p>
+        <a href="{{ url_for('add_task') }}" class="btn btn-primary">Create Task</a>
+    </div>
+    {% endif %}
+</main>
+<footer>TaskFlow • Flask + SQLAlchemy</footer>
+</body>
+</html>

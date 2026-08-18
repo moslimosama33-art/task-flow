@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TaskFlow | Register</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<div class="auth-layout">
+    <div class="auth-decoration">
+        <a class="brand brand-light" href="{{ url_for('login') }}"><span class="brand-dot"></span>TaskFlow</a>
+        <div class="decoration-content">
+            <span class="eyebrow light">TASK MANAGEMENT</span>
+            <h1>Turn your plans<br>into <span>progress.</span></h1>
+            <p>A simple place to organize your daily tasks and keep your work moving.</p>
+        </div>
+        <div class="decor-dots"></div>
+    </div>
+    <div class="auth-panel">
+        <div class="form-card">
+            <div class="mobile-brand"><a class="brand" href="{{ url_for('login') }}"><span class="brand-dot"></span>TaskFlow</a></div>
+            <div class="form-heading">
+                <span class="icon-badge">+</span>
+                <h2>Create Account</h2>
+                <p>Join TaskFlow and start organizing.</p>
+            </div>
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% for category, message in messages %}
+                    <div class="alert {{ category }}">{{ message }}</div>
+                {% endfor %}
+            {% endwith %}
+            <form method="post">
+                <label>Username</label>
+                <div class="input-wrap"><span>👤</span><input name="username" type="text" placeholder="Enter username" required></div>
+                <label>Password</label>
+                <div class="input-wrap"><span>🔒</span><input name="password" type="password" placeholder="Enter password" required minlength="4"></div>
+                <label>Confirm Password</label>
+                <div class="input-wrap"><span>✓</span><input name="confirm_password" type="password" placeholder="Confirm password" required></div>
+                <button class="btn btn-primary full" type="submit">Create Account</button>
+            </form>
+            <p class="switch-text">Already have an account? <a href="{{ url_for('login') }}">Login</a></p>
+        </div>
+    </div>
+</div>
+</body>
+</html>

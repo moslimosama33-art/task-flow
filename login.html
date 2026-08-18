@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TaskFlow | Login</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<div class="auth-layout">
+    <div class="auth-decoration">
+        <a class="brand brand-light" href="{{ url_for('login') }}"><span class="brand-dot"></span>TaskFlow</a>
+        <div class="decoration-content">
+            <span class="eyebrow light">WELCOME BACK</span>
+            <h1>Your tasks.<br>Your <span>focus.</span></h1>
+            <p>Log in to see your tasks and continue where you left off.</p>
+        </div>
+        <div class="decor-dots"></div>
+    </div>
+    <div class="auth-panel">
+        <div class="form-card">
+            <div class="mobile-brand"><a class="brand" href="{{ url_for('login') }}"><span class="brand-dot"></span>TaskFlow</a></div>
+            <div class="form-heading">
+                <span class="icon-badge">→</span>
+                <h2>Welcome Back</h2>
+                <p>Enter your details to access your tasks.</p>
+            </div>
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% for category, message in messages %}
+                    <div class="alert {{ category }}">{{ message }}</div>
+                {% endfor %}
+            {% endwith %}
+            <form method="post">
+                <label>Username</label>
+                <div class="input-wrap"><span>👤</span><input name="username" type="text" placeholder="Enter username" required></div>
+                <label>Password</label>
+                <div class="input-wrap"><span>🔒</span><input name="password" type="password" placeholder="Enter password" required></div>
+                <button class="btn btn-secondary full" type="submit">Login</button>
+            </form>
+            <p class="switch-text">Don't have an account? <a href="{{ url_for('register') }}">Create one</a></p>
+        </div>
+    </div>
+</div>
+</body>
+</html>
